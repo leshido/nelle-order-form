@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="he-IL" data-theme="light" dir="rtl">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Liebe Order Form</title>
+
+	<link rel="stylesheet" href="css/pico.min.css" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;700&display=swap" rel="stylesheet" />
+    
+	<script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body x-data>
+	<div class="logo-banner-wrapper">
+		<img src="img/liebe-banner.jpg" alt="Liebe logo" class="media-responsive center-block logo-banner" />
+	</div>
+
+	<main class="container">
+		<div x-show="$store.form.phase != 'done'">
+			<h1>טופס פרטים לתעודת לידה</h1>
+			<p>
+				<strong> מזל טוב, קסם חדש נולד! </strong>
+				<br />
+				תעודת לידה מעוצבת בהתאמה אישית לפי טעמכם.
+				<br />
+				רק הכניסו את כל הפרטים של הבייבי שלכם ואנחנו נדאג לכל השאר.
+			</p>
+
+			<form id="main-form" action="https://script.google.com/macros/s/AKfycbyqegn0X6TS_Mgz12tlQDea2uhxwCv_YvawnMBzeGc1mA70CjqP86yIRooYNplRIOT1/exec" method="post">
+				<fieldset>
+					<div class="grid">
+						<label for="name-he">
+							שם הבייבי (עברית)
+							<input type="text" id="name-he" name="name-he" placeholder="שם פרטי ומשפחה" required />
+						</label>
+
+						<label for="name-en">
+							שם הבייבי (אנגלית)
+							<input type="text" id="name-en" name="name-en" placeholder="First and Last Name" dir="ltr" required />
+						</label>
+					</div>
+
+					<div class="grid">
+						<label for="birthweight">
+							משקל בלידה (ק״ג)
+							<input type="number" name="birthweight" id="birthweight" step="0.001" required />
+						</label>
+
+						<label for="week">
+							שבוע הלידה
+							<input type="text" name="week" id="week" placeholder="למשל 38+4" pattern="\d+\+\d" data-invalid="אנא ציינו שבוע מדוייק כולל יום, למשל 39+0" required />
+						</label>
+
+						<label for="baby-gender">
+							מין
+							<select name="baby-gender" id="baby-gender">
+								<option value="undisclosed">בן/בת</option>
+								<option value="בן">בן</option>
+								<option value="בת">בת</option>
+							</select>
+						</label>
+					</div>
+
+					<div class="grid" x-data="{
+						birthTime: '',
+						get zodiac() {
+							if (this.birthTime == '') return 0;
+							return Number(new Intl.DateTimeFormat('fr-TN-u-ca-persian', {month: 'numeric'}).format( new Date(this.birthTime) )) - 1
+						},
+						get zodiacValue() {
+							return document.getElementById('zodiac').options[this.zodiac].value;
+						}
+					}">
+						<label for="birthtime">
+							תאריך ושעת לידה
+							<input type="datetime-local" id="birthtime" x-ref="birthtime" @change="birthTime = $el.value" name="birthtime" value="" min="" max="" dir="ltr" required />
+						</label>
+
+						<label for="zodiac">
+							מזל אסטרולוגי
+							<select name="zodiac" id="zodiac" x-bind:value="zodiacValue">
+								<option value="טלה">טלה</option>
+								<option value="שור">שור</option>
+								<option value="תאומים">תאומים</option>
+								<option value="סרטן">סרטן</option>
+								<option value="אריה">אריה</option>
+								<option value="בתולה">בתולה</option>
+								<option value="מאזניים">מאזניים</option>
+								<option value="עקרב">עקרב</option>
+								<option value="קשת">קשת</option>
+								<option value="גדי">גדי</option>
+								<option value="דלי">דלי</option>
+								<option value="דגים">דגים</option>
+							</select>
+						</label>
+					</div>
+
+					<label for="parent1-name">
+						הורה 1
+						<div class="grid">
+							<select name="parent1-gender" id="parent1-gender">
+								<option selected value="אמא">אמא</option>
+								<option value="אבא">אבא</option>
+							</select>
+							<input type="text" name="parent1-name" id="parent1-name" placeholder="שם פרטי" required />
+						</div>
+					</label>
+
+					<label for="parent2-name">
+						הורה 2
+						<div class="grid">
+							<select name="parent2-gender" id="parent2-gender">
+								<option value="אמא">אמא</option>
+								<option selected value="אבא">אבא</option>
+							</select>
+							<input type="text" name="parent2-name" id="parent2-name" placeholder="שם פרטי" required />
+						</div>
+					</label>
+					
+					<label for="siblings">
+						שמות אחים ואחיות (אם יש)
+						<input type="text" name="siblings" id="siblings" />
+					</label>
+
+					<label for="hospital">
+						שם ביה״ח בו נולד הבייבי
+						<input type="text" id="hospital" name="hospital" placeholder="" required />
+					</label>
+
+					<article>
+						<div x-data='{
+							style : "rainbow",
+							color : "teal",
+							colorStyles : {
+								floral: ["brown", "burgundy", "heather", "mint", "powder", "rust", "sky"],
+								origami: ["brown", "mint", "mustard", "powder", "sky", "teal"],
+								rainbow : ["mint", "navy", "powder", "sky", "teal"],
+								jungle : ["tiger", "sloth", "giraffe", "zebra"],
+								woodland : ["deer", "fox", "bamby"],
+								sealife : ["whale", "seahorse", "manta ray"],
+							},
+							get imageSrc() { 
+								if (!this.colorStyles[this.style].includes(this.color)) this.color = this.colorStyles[this.style][0];
+								return this.style + "-" + this.color + (this.style == "floral" ? ".jpg" : ".png");
+							},
+							get legendTitle() {
+								return ["jungle", "woodland", "sealife"].indexOf(this.style) >= 0 ? "דגם" : "צבע" ;
+							},
+							styleHasColor(val) { return this.colorStyles[this.style].includes(val) }
+						}'>
+							<div class="grid">
+								<div>
+									<label for="select-style">
+										סגנון מועדף לתעודת הלידה
+										<select name="select-style" id="select-style" x-model="style">
+											<option value="rainbow">Rainbow</option>
+											<option value="floral">Floral</option>
+											<option value="origami">Origami</option>
+											<option value="jungle">Jungle</option>
+											<option value="woodland">Woodland</option>
+											<option value="sealife">Sea Life</option>
+										</select>
+									</label>
+
+									<fieldset id="select-color">
+										<legend>
+											<span x-text="legendTitle"></span> -
+											<span x-text="color" style="text-transform: capitalize"></span>
+										</legend>
+										<input type="radio" id="teal" name="color" value="teal" x-model="color" x-show="styleHasColor($el.value)" style="color: #597175" checked />
+										<input type="radio" id="mint" name="color" value="mint" x-model="color" x-show="styleHasColor($el.value)" style="color: #a5b2a2" />
+										<input type="radio" id="sky" name="color" value="sky" x-model="color" x-show="styleHasColor($el.value)" style="color: #96acb9" />
+										<input type="radio" id="heather" name="color" value="heather" x-model="color" x-show="styleHasColor($el.value)" style="color: #a4787f" />
+										<input type="radio" id="brown" name="color" value="brown" x-model="color" x-show="styleHasColor($el.value)" style="color: #c47646" />
+										<input type="radio" id="navy" name="color" value="navy" x-model="color" x-show="styleHasColor($el.value)" style="color: #00395f" />
+										<input type="radio" id="rust" name="color" value="rust" x-model="color" x-show="styleHasColor($el.value)" style="color: #aa5342" />
+										<input type="radio" id="mustard" name="color" value="mustard" x-model="color" x-show="styleHasColor($el.value)" style="color: #e49902" />
+										<input type="radio" id="burgundy" name="color" value="burgundy" x-model="color" x-show="styleHasColor($el.value)" style="color: #6d292a" />
+										<input type="radio" id="powder" name="color" value="powder" x-model="color" x-show="styleHasColor($el.value)" style="color: #dfb4a4" />
+
+										<input type="radio" id="tiger" name="color" value="tiger" x-model="color" x-show="styleHasColor($el.value)" style="color: #C69055" />
+										<input type="radio" id="giraffe" name="color" value="giraffe" x-model="color" x-show="styleHasColor($el.value)" style="color: #974426" />
+										<input type="radio" id="sloth" name="color" value="sloth" x-model="color" x-show="styleHasColor($el.value)" style="color: #5A4425" />
+										<input type="radio" id="zebra" name="color" value="zebra" x-model="color" x-show="styleHasColor($el.value)" style="color: #527756" />
+										
+										<input type="radio" id="deer" name="color" value="deer" x-model="color" x-show="styleHasColor($el.value)" style="color: #5A4225" />
+										<input type="radio" id="fox" name="color" value="fox" x-model="color" x-show="styleHasColor($el.value)" style="color: #964325" />
+										<input type="radio" id="bamby" name="color" value="bamby" x-model="color" x-show="styleHasColor($el.value)" style="color: #507856" />
+										
+										<input type="radio" id="whale" name="color" value="whale" x-model="color" x-show="styleHasColor($el.value)" style="color: #ABD4D6" />
+										<input type="radio" id="seahorse" name="color" value="seahorse" x-model="color" x-show="styleHasColor($el.value)" style="color: #C6CDC4" />
+										<input type="radio" id="mantaray" name="color" value="manta ray" x-model="color" x-show="styleHasColor($el.value)" style="color: #E0C6BF" />
+									</fieldset>
+								</div>
+
+								<div>
+									<img alt="" :src="'img/' + imageSrc" class="media-responsive center-block" />
+								</div>
+							</div>
+						</div>
+					</article>
+
+					<section>
+						<h2>פרטי קשר</h2>
+
+						<div class="grid">
+							<label for="email">
+								דוא״ל
+								<input type="email" name="email" id="email" placeholder="name@example.com" dir="ltr" required />
+							</label>
+
+							<label for="phone">
+								טלפון
+								<input type="tel" name="phone" id="phone" placeholder="+972" dir="ltr" required />
+							</label>
+						</div>
+
+						<fieldset>
+							<legend>
+								לצורך אישור העיצוב לפני הדפסה, איך תעדיפו שנתקשר איתכם?
+							</legend>
+							<label for="contact-phone">
+								<input type="checkbox" id="contact-phone" name="contact-phone" checked />
+								טלפון - וואטסאפ
+							</label>
+							<label for="contact-email">
+								<input type="checkbox" id="contact-email" name="contact-email" checked />
+								דוא״ל
+							</label>
+						</fieldset>
+
+						<label for="notes">
+							בקשות/הערות?
+							<textarea name="notes" id="notes" cols="30" rows="5"></textarea>
+						</label>
+						
+						<label for="newsletter">
+							<input type="checkbox" name="newsletter" id="newsletter" checked />
+							אני מעוניין/ת לקבל מכם עדכונים והטבות בדוא״ל/וואטסאפ
+						</label>
+					</section>
+
+					<div x-data>
+						<button type="submit" id="btn-submit">הזמנה</button>
+						<progress indeterminate="true" max="100" x-show="$store.form.phase == 'loading'"></progress>
+					</div>
+
+					<img src="img/Noam_Room.jpg" alt="A room with a framed designed birth certificate" class="media-responsive center-block" />
+				</fieldset>
+			</form>
+		</div>
+
+		<template x-if="$store.form.phase == 'done'">
+			<div>
+				<article>
+					<header>
+						<strong> תודה שמילאת את הפרטים! </strong>
+					</header>
+					<p>
+						בימים הקרובים נשלח לך את התעודה המעוצבת לאישור במייל או בוואטסאפ
+						(לפי הבחירה שסימנת בטופס) והמשלוח ייצא לדרך.
+					</p>
+				</article>
+			</div>
+		</template>
+	</main>
+
+	<script>
+		(function() {
+			document.addEventListener("alpine:init", () => {
+				Alpine.store("form", {
+					phase: "form"
+				});
+			});
+
+			document.querySelectorAll("input").forEach((el) => {
+				el.addEventListener("invalid", function(e) {
+					if (e.target.hasAttribute("data-invalid"))
+						e.target.setCustomValidity(e.target.getAttribute("data-invalid"));
+					e.target.classList.add("invalid");
+				});
+				el.addEventListener("change", function(e) {
+					e.target.setCustomValidity("");
+					e.target.classList.remove("invalid");
+				});
+			});
+
+			var mainForm = document.getElementById("main-form");
+			var submitBtn = document.getElementById("btn-submit");
+			submitBtn.addEventListener(
+				"click",
+				function(e) {
+					e.preventDefault();
+					// Send form
+					if (mainForm.reportValidity()) {
+						let formData = new FormData(mainForm);
+						mainForm.firstElementChild.setAttribute("disabled", "disabled");
+						submitBtn.setAttribute("disabled", "disabled");
+						// mainForm.submit();
+
+						// Submit
+						Alpine.store("form").phase = "loading";
+						let xhr = new XMLHttpRequest();
+						xhr.addEventListener("error", function(event) {
+							alert("אופס! אירעה תקלה, אנא נסו שוב.");
+							window.location.href = window.location.href;
+						});
+						xhr.addEventListener("load", function(event) {
+							Alpine.store("form").phase = "done";
+						});
+						xhr.open(mainForm.method.toUpperCase(), mainForm.action);
+						// xhr.send(new URLSearchParams(formData).toString());
+						xhr.send(formData);
+					}
+				},
+				false
+			);
+		})();
+	</script>
+</body>
+
+</html>
