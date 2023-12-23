@@ -16,12 +16,12 @@
     margin-right: auto;
 }
 
-#select-color input {
+#select-design input {
     border: none;
     background-color: currentColor;
 }
 
-#select-color input:checked {
+#select-design input:checked {
     background-color: #fff;
     border: .35em solid currentColor;
 }
@@ -43,7 +43,7 @@ fieldset[disabled] {
 }
 
 .logo-banner-wrapper {
-    background-color: #a7b1a6;
+    background-color: #A9B5A7;
 }
 
 .grid-no-responsive {
