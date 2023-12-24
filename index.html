@@ -83,27 +83,29 @@
 						</label>
 					</div>
 
-					<label for="parent1-name">
-						Parent 1
-						<div class="grid">
-							<select name="parent1-gender" id="parent1-gender">
-								<option selected value="Mom">Mom</option>
-								<option value="Dad">Dad</option>
-							</select>
-							<input type="text" name="parent1-name" id="parent1-name" placeholder="Name" required />
-						</div>
-					</label>
-
-					<label for="parent2-name">
-						Parent 2
-						<div class="grid">
-							<select name="parent2-gender" id="parent2-gender">
-								<option value="Mom">Mom</option>
-								<option selected value="Dad">Dad</option>
-							</select>
-							<input type="text" name="parent2-name" id="parent2-name" placeholder="Name" required />
-						</div>
-					</label>
+					<div class="grid">
+						<label for="parent1-name">
+							Parent 1
+							<div class="grid grid-1-2">
+								<select name="parent1-gender" id="parent1-gender">
+									<option selected value="Mom">Mom</option>
+									<option value="Dad">Dad</option>
+								</select>
+								<input type="text" name="parent1-name" id="parent1-name" placeholder="Name" required />
+							</div>
+						</label>
+	
+						<label for="parent2-name">
+							Parent 2
+							<div class="grid grid-1-2">
+								<select name="parent2-gender" id="parent2-gender">
+									<option value="Mom">Mom</option>
+									<option selected value="Dad">Dad</option>
+								</select>
+								<input type="text" name="parent2-name" id="parent2-name" placeholder="Name" required />
+							</div>
+						</label>
+					</div>
 
 					<article>
 						<div x-data='{

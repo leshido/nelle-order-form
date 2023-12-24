@@ -49,3 +49,7 @@ fieldset[disabled] {
 .grid-no-responsive {
     grid-template-columns: repeat(auto-fit, minmax(0%, 1fr));
 }
+
+.grid-1-2 {
+    grid-template-columns: 1fr 2fr;
+}
