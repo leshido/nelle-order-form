@@ -29,36 +29,36 @@
 			<p>
 				<strong>Congratulations! Your new bundle of joy has arrived.</strong><br>
 				Create a memorable birth announcement  that will last forever.<br>
-				Fill out all the info below and we’ll take care of everything else.
+				Fill out all the info below and we'll take care of everything else.
 			</p>
 
 			<form id="main-form" action="https://script.google.com/macros/s/AKfycbxOIayxKYTTqNJnwnFs1z4HEOExWYlM5oebosXnAXQESywqCyWnKB5BJ4TQHCb6r9vhEQ/exec" method="post">
 				<fieldset>
 					<div class="grid">
 						<label for="name-he">
-							Baby's Name - Hebrew
-							<input type="text" id="name-he" name="name-he" placeholder="שם פרטי ומשפחה" dir="rtl" required />
+							Baby's name - Hebrew
+							<input type="text" id="name-he" name="name-he" placeholder="שם פרטי" dir="rtl" required />
 						</label>
 
 						<label for="name-en">
-							Baby's Name - English
-							<input type="text" id="name-en" name="name-en" placeholder="First and Last Name" required />
+							Baby's name - English
+							<input type="text" id="name-en" name="name-en" placeholder="First, middle and last name" required />
 						</label>
 					</div>
 
 					<div class="grid">
 						<label for="birthweight">
-							Weight at Birth (lbs.)
+							Weight at birth (lbs.)
 							<input type="number" name="birthweight" id="birthweight" step="0.001" required />
 						</label>
 
 						<label for="birthlength">
-							Length at Birth (inches)
+							Length at birth (inches)
 							<input type="number" name="birthlength" id="birthlength" step="0.001" required />
 						</label>
 
 						<label for="birthplace">
-							Place of Birth (City, State)
+							Place of birth (City, State)
 							<input type="text" id="birthplace" name="birthplace" placeholder="New York, NY" required />
 						</label>
 					</div>
@@ -73,12 +73,12 @@
 						}
 					}">
 						<label for="birthtime">
-							Date & Time of Birth
+							Date & time of birth
 							<input type="datetime-local" id="birthtime" x-ref="birthtime" @change="birthTime = $el.value" name="birthtime" value="" min="" max="" required />
 						</label>
 
 						<label for="birthdate-he">
-							Hebrew Date of Birth
+							Hebrew date of birth
 							<input type="text" id="birthdate-he" name="birthdate-he" x-bind:value="hebrewDateValue" placeholder="" dir="ltr" required/>
 						</label>
 					</div>
