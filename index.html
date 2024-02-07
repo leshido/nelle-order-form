@@ -46,10 +46,20 @@
 						</label>
 					</div>
 
-					<div class="grid">
+					<div class="grid" x-data="{
+						weightLbs: 0,
+						weightOz: 0,
+						get combinedWeight() {
+							return this.weightLbs + 'lb + ' + this.weightOz + 'oz'
+						}
+					}">
 						<label for="birthweight">
-							Weight at birth (lbs.)
-							<input type="number" name="birthweight" id="birthweight" step="0.001" required />
+							Weight at birth (lbs/oz)
+							<input type="text" name="birthweight" id="birthweight" x-bind:value="combinedWeight" required hidden/>
+							<div class="grid combined">
+								<input type="number" placeholder="lb" name="birthweight-lbs" id="birthweight-lbs" step="1" @change="weightLbs = $el.value" required />
+								<input type="number" placeholder="oz" name="birthweight-oz" id="birthweight-oz" step="1" @change="weightOz = $el.value" required />
+							</div>
 						</label>
 
 						<label for="birthlength">
@@ -66,7 +76,11 @@
 					<div class="grid" x-data="{
 						birthTime: Date.now(),
 						get hebrewDate() {
-							return new Intl.DateTimeFormat('en-u-ca-hebrew',{year:'numeric', month:'numeric', day:'numeric'}).format( new Date(this.birthTime) );
+							let dateCurr = new Date(this.birthTime);
+							if (dateCurr.getHours() > 16) {
+								dateCurr = new Date(dateCurr.getTime() + 86400000);
+							}
+							return new Intl.DateTimeFormat('en-u-ca-hebrew',{year:'numeric', month:'numeric', day:'numeric'}).format( dateCurr );
 						},
 						get hebrewDateValue() {
 							return this.hebrewDate;
