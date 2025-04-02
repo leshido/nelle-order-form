@@ -39,11 +39,12 @@ fieldset[disabled] {
 }
 
 .logo-banner {
-    max-height: 10rem;
+    max-height: 7rem;
 }
 
 .logo-banner-wrapper {
-    background-color: #A9B5A7;
+    border-top: 3rem solid #A0AE9A;
+    padding-top: 1.5rem;
 }
 
 .grid-no-responsive {
